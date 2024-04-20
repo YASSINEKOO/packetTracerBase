@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 public class Client extends Person{
     @Id
-    private Long cinClient;
+    private String cinClient;
 
     @Embedded
     private Location Location_Client;

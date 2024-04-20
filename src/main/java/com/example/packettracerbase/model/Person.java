@@ -1,4 +1,4 @@
-package com.example.packettracerbase.models;
+package com.example.packettracerbase.model;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Temporal;
@@ -22,6 +22,8 @@ public abstract class Person {
     protected String lastName;
 
     protected String email;
+
+    protected Role role;
 
     @Temporal(TemporalType.DATE)
     protected LocalDate dateOfBirth;

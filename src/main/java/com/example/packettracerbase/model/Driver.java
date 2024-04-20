@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 public class Driver extends Person{
     @Id
-    private Long cinDriver;
+    private String cinDriver;
 
     @Column(unique = true)
     private String licenseNumber;
@@ -24,12 +24,12 @@ public class Driver extends Person{
 
     private String brand;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "driver_packet",
-//            joinColumns = @JoinColumn(name = "driver_id"),
-//            inverseJoinColumns = @JoinColumn(name = "packet_id")
-//    )
-//    private Set<Packet> packets;
+    @ManyToMany
+    @JoinTable(
+            name = "driver_packet",
+            joinColumns = @JoinColumn(name = "driver_id"),
+            inverseJoinColumns = @JoinColumn(name = "packet_id")
+    )
+    private Set<Packet> packets;
 
 }

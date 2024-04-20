@@ -15,9 +15,9 @@ import java.util.Set;
 @Getter
 public class Sender extends Person{
     @Id
-    private Long cinSender;
+    private String cinSender;
 
     // Define the one-to-many relationship with Packet entities
-//    @OneToMany(mappedBy = "sender")
-//    private Set<Packet> packets;
+    @OneToMany(mappedBy = "sender")
+    private Set<Packet> packets;
 }

@@ -13,5 +13,5 @@ import lombok.*;
 @Getter
 public class Admin extends Person{
     @Id
-    private Long cinAdmin;
+    private String cinAdmin;
 }

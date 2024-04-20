@@ -1,5 +1,7 @@
 package com.example.packettracerbase.service;
 
+import com.example.packettracerbase.model.Admin;
+import com.example.packettracerbase.repository.AdminRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public Optional<Admin> getAdminById(Long id) {
+    public Optional<Admin> getAdminById(String id) {
         Optional<Admin> adminOptional = adminRepository.findById(id);
         if (adminOptional.isEmpty()) {
             throw new EntityNotFoundException("Admin not found with id: " + id);
@@ -44,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin updateAdmin(Long id, Admin adminDetails) {
+    public Admin updateAdmin(String id, Admin adminDetails) {
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Admin not found with id: " + id));
 
@@ -60,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAdmin(Long id) {
+    public void deleteAdmin(String id) {
         if (!adminRepository.existsById(id)) {
             throw new EntityNotFoundException("Admin not found with id: " + id);
         }
