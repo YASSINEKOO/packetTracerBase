@@ -1,6 +1,8 @@
 package com.example.packettracerbase.controller;
 
+import com.example.packettracerbase.controller.model.AuthenticationRequest;
 import com.example.packettracerbase.model.Sender;
+import com.example.packettracerbase.service.AuthenticationService;
 import com.example.packettracerbase.service.SenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,14 @@ public class SenderController {
 
     private final SenderService senderService;
 
+    private final AuthenticationService authenticationService;
+
+
     @Autowired
-    public SenderController(SenderService senderService) {
+    public SenderController(SenderService senderService,AuthenticationService authenticationService) {
         this.senderService = senderService;
+        this.authenticationService = authenticationService;
+
     }
 
     @GetMapping
@@ -49,5 +56,15 @@ public class SenderController {
     public ResponseEntity<Void> deleteSender(@PathVariable String id) {
         senderService.deleteSender(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthenticationRequest request) {
+        boolean isAuthenticated = authenticationService.authenticateSender(request.getUsername(), request.getPassword());
+        if (isAuthenticated) {
+            return new ResponseEntity<>("Sender login successful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Sender login failed", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

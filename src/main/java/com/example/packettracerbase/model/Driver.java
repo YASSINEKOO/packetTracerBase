@@ -17,6 +17,8 @@ public class Driver extends Person{
     @Id
     private String cinDriver;
 
+    private Role role = Role.Driver;
+
     @Column(unique = true)
     private String licenseNumber;
 

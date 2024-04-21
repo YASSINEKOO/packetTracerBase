@@ -1,7 +1,9 @@
 package com.example.packettracerbase.controller;
 
+import com.example.packettracerbase.controller.model.AuthenticationRequest;
 import com.example.packettracerbase.model.Admin;
 import com.example.packettracerbase.service.AdminService;
+import com.example.packettracerbase.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,14 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final AuthenticationService authenticationService;
+
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService,AuthenticationService authenticationService) {
+
         this.adminService = adminService;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping
@@ -49,5 +55,15 @@ public class AdminController {
     public ResponseEntity<Void> deleteAdmin(@PathVariable String id) {
         adminService.deleteAdmin(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthenticationRequest request) {
+        boolean isAuthenticated = authenticationService.authenticateAdmin(request.getUsername(), request.getPassword());
+        if (isAuthenticated) {
+            return new ResponseEntity<>("Admin login successful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Admin login failed", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

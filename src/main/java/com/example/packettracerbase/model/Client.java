@@ -17,6 +17,8 @@ public class Client extends Person{
     @Id
     private String cinClient;
 
+    private Role role = Role.Client;
+
     @Embedded
     private Location Location_Client;
 

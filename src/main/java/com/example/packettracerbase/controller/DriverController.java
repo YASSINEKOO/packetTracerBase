@@ -1,6 +1,8 @@
 package com.example.packettracerbase.controller;
 
+import com.example.packettracerbase.controller.model.AuthenticationRequest;
 import com.example.packettracerbase.model.Driver;
+import com.example.packettracerbase.service.AuthenticationService;
 import com.example.packettracerbase.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,14 @@ import java.util.List;
 public class DriverController {
 
     private final DriverService driverService;
+    private final AuthenticationService authenticationService;
+
 
     @Autowired
-    public DriverController(DriverService driverService) {
+    public DriverController(DriverService driverService,AuthenticationService authenticationService) {
         this.driverService = driverService;
+        this.authenticationService = authenticationService;
+
     }
 
     @GetMapping
@@ -49,5 +55,14 @@ public class DriverController {
     public ResponseEntity<Void> deleteDriver(@PathVariable String id) {
         driverService.deleteDriver(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthenticationRequest request) {
+        boolean isAuthenticated = authenticationService.authenticateDriver(request.getUsername(), request.getPassword());
+        if (isAuthenticated) {
+            return new ResponseEntity<>("Driver login successful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Driver login failed", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

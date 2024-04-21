@@ -14,4 +14,6 @@ import lombok.*;
 public class Admin extends Person{
     @Id
     private String cinAdmin;
+
+    private Role role = Role.Admin;
 }

@@ -17,6 +17,8 @@ public class Sender extends Person{
     @Id
     private String cinSender;
 
+    private Role role = Role.Sender;
+
     // Define the one-to-many relationship with Packet entities
     @OneToMany(mappedBy = "sender")
     private Set<Packet> packets;
